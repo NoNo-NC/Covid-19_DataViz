@@ -1,11 +1,24 @@
-<script setup></script>
+<script setup>
+import 'bootstrap/dist/css/bootstrap.min.css'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div id="app">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">COVID-19 DataViz</span>
+      </div>
+    </nav>
+    
+    <main class="container-fluid mt-3">
+      <router-view />
+    </main>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#app {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+</style>
