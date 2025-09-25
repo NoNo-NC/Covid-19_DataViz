@@ -1,9 +1,5 @@
 # COVID-19 DataViz
 
-> Tableau de bord interactif pour visualiser en temps réel l'évolution de la pandémie de COVID-19 à travers le monde.
-
-![COVID-19 DataViz Screenshot](https://via.placeholder.com/800x400/0d6efd/ffffff?text=COVID-19+DataViz+Dashboard)
-
 ## 🌟 Fonctionnalités
 
 - 📊 **Graphiques interactifs** : Évolution temporelle des cas avec Chart.js (échelle linéaire/logarithmique)
