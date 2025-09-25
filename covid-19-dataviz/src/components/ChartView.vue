@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, watch, nextTick } from 'vue'
+import { ref, computed } from 'vue' // Supprimer onMounted, watch, nextTick non utilisés
 import { useCovidStore } from '@/stores/covid'
 import {
   Chart as ChartJS,

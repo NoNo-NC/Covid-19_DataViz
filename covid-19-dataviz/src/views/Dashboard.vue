@@ -1,4 +1,5 @@
 <script setup>
+// Le nom du fichier devient CovidDashboard.vue ou DashboardView.vue
 import { onMounted } from 'vue'
 import { useCovidStore } from '@/stores/covid'
 import SummaryCards from '@/components/SummaryCards.vue'

@@ -247,24 +247,24 @@ onUnmounted(() => {
           <small class="fw-bold d-block mb-1">Légende (cas):</small>
           <div class="d-flex flex-column gap-1" style="font-size: 0.75rem;">
             <div class="d-flex align-items-center">
-              <div class="legend-circle me-2" style="background: #dc3545; width: 16px; height: 16px;"></div>
-              <span>> 1M</span>
+              <div class="legend-circle me-2" style="background: #dc3545; width: 16px; height: 16px; border-radius: 50%;"></div>
+              <span>&gt; 1M</span>
             </div>
             <div class="d-flex align-items-center">
-              <div class="legend-circle me-2" style="background: #fd7e14; width: 12px; height: 12px;"></div>
-              <span>> 100K</span>
+              <div class="legend-circle me-2" style="background: #fd7e14; width: 12px; height: 12px; border-radius: 50%;"></div>
+              <span>&gt; 100K</span>
             </div>
             <div class="d-flex align-items-center">
-              <div class="legend-circle me-2" style="background: #ffc107; width: 10px; height: 10px;"></div>
-              <span>> 10K</span>
+              <div class="legend-circle me-2" style="background: #ffc107; width: 10px; height: 10px; border-radius: 50%;"></div>
+              <span>&gt; 10K</span>
             </div>
             <div class="d-flex align-items-center">
-              <div class="legend-circle me-2" style="background: #20c997; width: 8px; height: 8px;"></div>
-              <span>> 1K</span>
+              <div class="legend-circle me-2" style="background: #20c997; width: 8px; height: 8px; border-radius: 50%;"></div>
+              <span>&gt; 1K</span>
             </div>
             <div class="d-flex align-items-center">
-              <div class="legend-circle me-2" style="background: #6f42c1; width: 6px; height: 6px;"></div>
-              <span>< 1K</span>
+              <div class="legend-circle me-2" style="background: #6f42c1; width: 6px; height: 6px; border-radius: 50%;"></div>
+              <span>&lt; 1K</span>
             </div>
           </div>
         </div>
@@ -272,3 +272,48 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.map-container {
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.map-legend {
+  font-size: 0.85rem;
+  max-width: 120px;
+  z-index: 1000;
+}
+
+.legend-circle {
+  display: inline-block;
+}
+
+/* Styles pour les popups et tooltips Leaflet */
+:global(.custom-popup .leaflet-popup-content-wrapper) {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+:global(.custom-tooltip) {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border: none !important;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.875rem;
+}
+
+:global(.map-popup) {
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .map-legend {
+    font-size: 0.75rem;
+    max-width: 100px;
+  }
+  
+  .map-container {
+    height: 400px !important;
+  }
+}
+</style>
