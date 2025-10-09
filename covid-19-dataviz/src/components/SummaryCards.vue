@@ -57,7 +57,7 @@ const cards = computed(() => [
   <div class="summary-cards">
     <div class="row g-3">
       <div v-for="card in cards" :key="card.title" class="col-md-3 col-sm-6">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm themed-card">
           <div class="card-body d-flex align-items-center">
             <div class="flex-shrink-0 me-3">
               <div
@@ -105,11 +105,20 @@ const cards = computed(() => [
 
 <style scoped>
 .summary-cards .card {
-  transition: transform 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .summary-cards .card:hover {
   transform: translateY(-2px);
+}
+
+/* Les couleurs s'adaptent automatiquement au thème grâce aux variables CSS globales */
+.themed-card {
+  background-color: var(--covid-card-bg);
+  border-color: var(--covid-card-border);
 }
 
 .bg-primary {
