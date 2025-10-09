@@ -33,9 +33,7 @@ onMounted(() => {
     <div v-else-if="covidStore.error" class="alert alert-danger" role="alert">
       <h4 class="alert-heading">Erreur de chargement</h4>
       <p>{{ covidStore.error }}</p>
-      <button @click="covidStore.fetchAllData()" class="btn btn-outline-danger">
-        Réessayer
-      </button>
+      <button @click="covidStore.fetchAllData()" class="btn btn-outline-danger">Réessayer</button>
     </div>
 
     <!-- Main content -->
@@ -67,12 +65,12 @@ onMounted(() => {
   .dashboard {
     padding: 0 10px;
   }
-  
+
   /* Sur mobile, afficher la carte en premier */
   .col-lg-8 {
     order: 1;
   }
-  
+
   .col-lg-4 {
     order: 2;
   }

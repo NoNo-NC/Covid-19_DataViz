@@ -10,7 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  LogarithmicScale
+  LogarithmicScale,
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 
@@ -23,7 +23,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 )
 
 const covidStore = useCovidStore()
@@ -48,17 +48,17 @@ const chartData = computed(() => {
   }
 
   const headers = covidStore.confirmedData.headers.slice(4) // Ignorer les 4 premières colonnes
-  const labels = headers.map(date => {
+  const labels = headers.map((date) => {
     const d = new Date(date)
     return d.toLocaleDateString('fr-FR', { month: 'short', day: 'numeric' })
   })
 
   const datasets = covidStore.selectedCountries.map((country, index) => {
     const countryData = covidStore.confirmedData.data.filter(
-      row => row['Country/Region'] === country
+      (row) => row['Country/Region'] === country,
     )
 
-    const values = headers.map(date => {
+    const values = headers.map((date) => {
       return countryData.reduce((sum, row) => {
         return sum + (parseInt(row[date]) || 0)
       }, 0)
@@ -77,7 +77,7 @@ const chartData = computed(() => {
 
   return {
     labels,
-    datasets
+    datasets,
   }
 })
 
@@ -95,10 +95,10 @@ const chartOptions = computed(() => ({
       mode: 'index',
       intersect: false,
       callbacks: {
-        label: function(context) {
+        label: function (context) {
           return `${context.dataset.label}: ${new Intl.NumberFormat('fr-FR').format(context.parsed.y)}`
-        }
-      }
+        },
+      },
     },
   },
   scales: {
@@ -106,31 +106,31 @@ const chartOptions = computed(() => ({
       display: true,
       title: {
         display: true,
-        text: 'Date'
+        text: 'Date',
       },
       ticks: {
-        maxTicksLimit: 10
-      }
+        maxTicksLimit: 10,
+      },
     },
     y: {
       type: isLogarithmic.value ? 'logarithmic' : 'linear',
       display: true,
       title: {
         display: true,
-        text: 'Nombre de cas'
+        text: 'Nombre de cas',
       },
       ticks: {
-        callback: function(value) {
+        callback: function (value) {
           return new Intl.NumberFormat('fr-FR', { notation: 'compact' }).format(value)
-        }
-      }
+        },
+      },
     },
   },
   interaction: {
     mode: 'nearest',
     axis: 'x',
-    intersect: false
-  }
+    intersect: false,
+  },
 }))
 
 function toggleScale() {
@@ -144,14 +144,14 @@ function toggleScale() {
       <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
         <h5 class="card-title mb-0">📊 Évolution des cas</h5>
         <div class="btn-group btn-group-sm">
-          <button 
+          <button
             class="btn"
             :class="!isLogarithmic ? 'btn-primary' : 'btn-outline-secondary'"
             @click="toggleScale"
           >
             Linéaire
           </button>
-          <button 
+          <button
             class="btn"
             :class="isLogarithmic ? 'btn-primary' : 'btn-outline-secondary'"
             @click="toggleScale"
@@ -160,19 +160,19 @@ function toggleScale() {
           </button>
         </div>
       </div>
-      
+
       <div class="card-body">
         <!-- Country selection -->
         <div class="mb-3">
           <label class="form-label small">Pays sélectionnés :</label>
           <div class="d-flex flex-wrap gap-2">
-            <span 
-              v-for="country in covidStore.selectedCountries" 
+            <span
+              v-for="country in covidStore.selectedCountries"
               :key="country"
               class="badge bg-primary d-flex align-items-center"
             >
               {{ country }}
-              <button 
+              <button
                 @click="covidStore.removeSelectedCountry(country)"
                 class="btn-close btn-close-white ms-1"
                 style="font-size: 0.6em"
@@ -184,18 +184,20 @@ function toggleScale() {
 
         <!-- Country selector -->
         <div class="mb-3">
-          <select 
-            class="form-select form-select-sm" 
-            @change="(e) => { 
-              if (e.target.value) {
-                covidStore.addSelectedCountry(e.target.value)
-                e.target.value = ''
+          <select
+            class="form-select form-select-sm"
+            @change="
+              (e) => {
+                if (e.target.value) {
+                  covidStore.addSelectedCountry(e.target.value)
+                  e.target.value = ''
+                }
               }
-            }"
+            "
           >
             <option value="">+ Ajouter un pays...</option>
-            <option 
-              v-for="country in covidStore.countries" 
+            <option
+              v-for="country in covidStore.countries"
               :key="country"
               :value="country"
               :disabled="covidStore.selectedCountries.includes(country)"
@@ -206,13 +208,8 @@ function toggleScale() {
         </div>
 
         <!-- Chart container -->
-        <div class="chart-container" style="position: relative; height: 300px;">
-          <Line 
-            v-if="chartData"
-            ref="chartRef"
-            :data="chartData" 
-            :options="chartOptions"
-          />
+        <div class="chart-container" style="position: relative; height: 300px">
+          <Line v-if="chartData" ref="chartRef" :data="chartData" :options="chartOptions" />
           <div v-else class="d-flex align-items-center justify-content-center h-100">
             <div class="text-center text-muted">
               <div class="mb-2">📈</div>
@@ -246,12 +243,12 @@ function toggleScale() {
   .card-header {
     gap: 10px;
   }
-  
+
   .btn-group-sm .btn {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
   }
-  
+
   .chart-container {
     height: 250px !important;
   }

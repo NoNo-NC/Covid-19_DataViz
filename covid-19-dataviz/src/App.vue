@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
         <span class="navbar-brand mb-0 h1">COVID-19 DataViz</span>
       </div>
     </nav>
-    
+
     <main class="container-fluid mt-3">
       <router-view />
     </main>

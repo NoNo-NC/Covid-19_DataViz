@@ -15,7 +15,7 @@ const formatDate = (dateStr) => {
   return new Intl.DateTimeFormat('fr-FR', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   }).format(date)
 }
 
@@ -25,14 +25,14 @@ const cards = computed(() => [
     value: covidStore.globalStats?.confirmed || 0,
     icon: '🔵',
     bgClass: 'bg-primary',
-    textClass: 'text-primary'
+    textClass: 'text-primary',
   },
   {
     title: 'Décès',
     value: covidStore.globalStats?.deaths || 0,
     icon: '🔴',
     bgClass: 'bg-danger',
-    textClass: 'text-danger'
+    textClass: 'text-danger',
   },
   {
     title: 'Guérisons (est.)',
@@ -40,7 +40,7 @@ const cards = computed(() => [
     icon: '🟢',
     bgClass: 'bg-success',
     textClass: 'text-success',
-    estimated: true
+    estimated: true,
   },
   {
     title: 'Cas actifs (est.)',
@@ -48,8 +48,8 @@ const cards = computed(() => [
     icon: '🟡',
     bgClass: 'bg-warning',
     textClass: 'text-warning',
-    estimated: true
-  }
+    estimated: true,
+  },
 ])
 </script>
 
@@ -60,18 +60,24 @@ const cards = computed(() => [
         <div class="card h-100 shadow-sm">
           <div class="card-body d-flex align-items-center">
             <div class="flex-shrink-0 me-3">
-              <div :class="['rounded-circle d-flex align-items-center justify-content-center', card.bgClass]" 
-                   style="width: 50px; height: 50px;">
+              <div
+                :class="[
+                  'rounded-circle d-flex align-items-center justify-content-center',
+                  card.bgClass,
+                ]"
+                style="width: 50px; height: 50px"
+              >
                 <span class="fs-4">{{ card.icon }}</span>
               </div>
             </div>
             <div class="flex-grow-1">
               <h6 class="card-title text-muted mb-1">
                 {{ card.title }}
-                <i v-if="card.estimated" 
-                   class="bi bi-info-circle-fill text-muted ms-1" 
-                   style="font-size: 0.7em"
-                   title="Données estimées"
+                <i
+                  v-if="card.estimated"
+                  class="bi bi-info-circle-fill text-muted ms-1"
+                  style="font-size: 0.7em"
+                  title="Données estimées"
                 ></i>
               </h6>
               <h3 :class="['card-text fw-bold mb-0', card.textClass]">
@@ -82,7 +88,7 @@ const cards = computed(() => [
         </div>
       </div>
     </div>
-    
+
     <div class="text-center mt-3">
       <div v-if="covidStore.globalStats?.lastUpdate" class="text-muted mb-1">
         <small>Dernière mise à jour : {{ formatDate(covidStore.globalStats.lastUpdate) }}</small>
@@ -124,10 +130,10 @@ const cards = computed(() => [
 
 /* Style pour les icônes d'information */
 .bi-info-circle-fill::before {
-  content: "ⓘ";
+  content: 'ⓘ';
 }
 
 .bi-exclamation-triangle-fill::before {
-  content: "⚠️";
+  content: '⚠️';
 }
 </style>

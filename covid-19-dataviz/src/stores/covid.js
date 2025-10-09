@@ -17,50 +17,49 @@ export const useCovidStore = defineStore('covid', () => {
 
   const globalStats = computed(() => {
     if (!confirmedData.value || !deathsData.value) return null
-    
+
     // Calcul des statistiques globales (dernière date disponible)
     const headers = confirmedData.value.headers
     const lastDateIndex = headers.length - 1
     const lastDate = headers[lastDateIndex]
-    
+
     let totalConfirmed = 0
     let totalDeaths = 0
-    
-    confirmedData.value.data.forEach(row => {
+
+    confirmedData.value.data.forEach((row) => {
       totalConfirmed += parseInt(row[lastDate] || 0)
     })
-    
-    deathsData.value.data.forEach(row => {
+
+    deathsData.value.data.forEach((row) => {
       totalDeaths += parseInt(row[lastDate] || 0)
     })
-    
+
     // Estimation des guérisons (environ 97-98% des cas non mortels)
     const estimatedRecovered = Math.round((totalConfirmed - totalDeaths) * 0.975)
-    
+
     return {
       confirmed: totalConfirmed,
       deaths: totalDeaths,
       recovered: estimatedRecovered, // Données estimées
       active: totalConfirmed - totalDeaths - estimatedRecovered,
       lastUpdate: lastDate,
-      recoveredEstimated: true // Flag pour indiquer que c'est une estimation
+      recoveredEstimated: true, // Flag pour indiquer que c'est une estimation
     }
   })
 
   async function fetchAllData() {
     loading.value = true
     error.value = null
-    
+
     try {
       const [confirmed, deaths] = await Promise.all([
         covidApi.getConfirmedData(),
-        covidApi.getDeathsData()
+        covidApi.getDeathsData(),
       ])
-      
+
       confirmedData.value = confirmed
       deathsData.value = deaths
       recoveredData.value = null // Plus de données officielles
-      
     } catch (err) {
       error.value = err.message
     } finally {
@@ -92,6 +91,6 @@ export const useCovidStore = defineStore('covid', () => {
     globalStats,
     fetchAllData,
     addSelectedCountry,
-    removeSelectedCountry
+    removeSelectedCountry,
   }
 })

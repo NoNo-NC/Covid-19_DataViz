@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const BASE_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series'
+const BASE_URL =
+  'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series'
 
 class CovidApiService {
   async getConfirmedData() {
@@ -27,9 +28,9 @@ class CovidApiService {
   // async getRecoveredData() { ... }
 
   parseCSV(csvText) {
-    const lines = csvText.split('\n').filter(line => line.trim())
+    const lines = csvText.split('\n').filter((line) => line.trim())
     if (lines.length === 0) return { headers: [], data: [] }
-    
+
     // Parse headers
     const headers = this.parseCSVLine(lines[0])
     const data = []
@@ -54,10 +55,10 @@ class CovidApiService {
     const result = []
     let current = ''
     let inQuotes = false
-    
+
     for (let i = 0; i < line.length; i++) {
       const char = line[i]
-      
+
       if (char === '"') {
         inQuotes = !inQuotes
       } else if (char === ',' && !inQuotes) {
@@ -67,22 +68,22 @@ class CovidApiService {
         current += char
       }
     }
-    
+
     result.push(current)
     return result
   }
 
   // Méthode pour obtenir les données agrégées par pays
   getCountryData(parsedData, country) {
-    return parsedData.data.filter(row => 
-      row['Country/Region']?.toLowerCase() === country.toLowerCase()
+    return parsedData.data.filter(
+      (row) => row['Country/Region']?.toLowerCase() === country.toLowerCase(),
     )
   }
 
   // Méthode pour obtenir la liste des pays uniques
   getCountries(parsedData) {
     const countries = new Set()
-    parsedData.data.forEach(row => {
+    parsedData.data.forEach((row) => {
       if (row['Country/Region']) {
         countries.add(row['Country/Region'])
       }
@@ -94,13 +95,13 @@ class CovidApiService {
   getCountryCoordinates(parsedData, country) {
     const countryRows = this.getCountryData(parsedData, country)
     if (countryRows.length === 0) return null
-    
+
     // Calculer la moyenne des coordonnées si plusieurs régions
     let totalLat = 0
     let totalLng = 0
     let count = 0
-    
-    countryRows.forEach(row => {
+
+    countryRows.forEach((row) => {
       const lat = parseFloat(row.Lat)
       const lng = parseFloat(row.Long)
       if (!isNaN(lat) && !isNaN(lng)) {
@@ -109,11 +110,13 @@ class CovidApiService {
         count++
       }
     })
-    
-    return count > 0 ? {
-      lat: totalLat / count,
-      lng: totalLng / count
-    } : null
+
+    return count > 0
+      ? {
+          lat: totalLat / count,
+          lng: totalLng / count,
+        }
+      : null
   }
 }
 
