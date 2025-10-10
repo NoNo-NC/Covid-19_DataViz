@@ -7,21 +7,22 @@ const covidStore = useCovidStore()
 const showDropdown = ref(false)
 const isExporting = ref(false)
 
-const props = defineProps({
+// Utiliser directement defineProps sans assigner à une variable
+defineProps({
   size: {
     type: String,
-    default: 'sm'
+    default: 'sm',
   },
   variant: {
     type: String,
-    default: 'outline-success'
-  }
+    default: 'outline-success',
+  },
 })
 
 // Fonctions d'export
 async function exportFullData() {
   if (!covidStore.confirmedData || !covidStore.selectedCountries.length) {
-    alert('Aucune donnée disponible pour l\'export')
+    alert("Aucune donnée disponible pour l'export")
     return
   }
 
@@ -31,7 +32,7 @@ async function exportFullData() {
       covidStore.confirmedData,
       covidStore.deathsData,
       covidStore.selectedCountries,
-      covidStore.globalStats
+      covidStore.globalStats,
     )
   } finally {
     isExporting.value = false
@@ -50,7 +51,7 @@ async function exportCountryData() {
     csvExport.exportCountryData(
       covidStore.confirmedData,
       covidStore.deathsData,
-      covidStore.selectedCountries
+      covidStore.selectedCountries,
     )
   } finally {
     isExporting.value = false
@@ -83,7 +84,7 @@ function handleClickOutside(event) {
 // Ajouter/supprimer l'event listener
 function toggleDropdown() {
   showDropdown.value = !showDropdown.value
-  
+
   if (showDropdown.value) {
     document.addEventListener('click', handleClickOutside)
   } else {
@@ -102,7 +103,7 @@ onUnmounted(() => {
   <div class="export-dropdown position-relative">
     <button
       @click="toggleDropdown"
-      :class="['btn', `btn-${variant}`, `btn-${size}`, 'd-flex', 'align-items-center', 'gap-2']"
+      :class="['btn', 'btn-outline-success', 'btn-sm', 'd-flex', 'align-items-center', 'gap-2']"
       :disabled="isExporting || covidStore.loading"
       type="button"
     >
@@ -113,14 +114,14 @@ onUnmounted(() => {
     </button>
 
     <!-- Dropdown menu -->
-    <div 
-      v-if="showDropdown" 
+    <div
+      v-if="showDropdown"
       class="dropdown-menu show position-absolute"
-      style="z-index: 1050; min-width: 250px;"
+      style="z-index: 1050; min-width: 250px"
     >
       <h6 class="dropdown-header">📈 Exporter les données</h6>
-      
-      <button 
+
+      <button
         @click="exportCountryData"
         class="dropdown-item d-flex align-items-center"
         :disabled="!covidStore.selectedCountries.length"
@@ -132,7 +133,7 @@ onUnmounted(() => {
         </div>
       </button>
 
-      <button 
+      <button
         @click="exportFullData"
         class="dropdown-item d-flex align-items-center"
         :disabled="!covidStore.selectedCountries.length"
@@ -144,7 +145,7 @@ onUnmounted(() => {
         </div>
       </button>
 
-      <button 
+      <button
         @click="exportGlobalStats"
         class="dropdown-item d-flex align-items-center"
         :disabled="!covidStore.globalStats"
@@ -157,10 +158,10 @@ onUnmounted(() => {
       </button>
 
       <div class="dropdown-divider"></div>
-      
+
       <div class="px-3 py-2">
         <small class="text-muted">
-          📝 Les fichiers CSV sont compatibles Excel<br>
+          📝 Les fichiers CSV sont compatibles Excel<br />
           🎯 Données optimisées pour l'analyse
         </small>
       </div>
