@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useCovidStore } from '@/stores/covid'
+import ExportButton from '@/components/ExportButton.vue'
 
 const covidStore = useCovidStore()
 
@@ -55,6 +56,12 @@ const cards = computed(() => [
 
 <template>
   <div class="summary-cards">
+    <!-- Header avec bouton d'export -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0">📊 Statistiques globales</h4>
+      <ExportButton />
+    </div>
+
     <div class="row g-3">
       <div v-for="card in cards" :key="card.title" class="col-md-3 col-sm-6">
         <div class="card h-100 shadow-sm themed-card">
